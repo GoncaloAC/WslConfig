@@ -14,7 +14,7 @@
 
 <br/>
 
-## 1. Installing Wsl2
+## <span style="color: #028A0F">**1. Installing Wsl2**</span>
 
 You can install the Windows subsystem for linux by simply tying into your Command Prompt / Windows Power Shell / Windows Terminal the command:
 
@@ -38,7 +38,7 @@ The first three commands enable the <em>Windows subsystem for Linux</em> and <em
 
 <br/>
 
-## 2. Installing Ubuntu from Microsoft Store
+## <span style="color: #028A0F">**2. Installing Ubuntu from Microsoft Store**</span>
 
 This step is as simple as just Opening the Microsoft Store, searching for your favorite Linux distro (supported by WSL) and pressing install. Once it downloads and installs not only you will be able to start using it but if you run the following command in your windows, it should list it and provide some details:
 
@@ -52,15 +52,15 @@ For the sake of this tutorial i will be installing Ubuntu-20.04. When the system
 
 <br/>
 
-## 3. Installing Coding Tools
+## <span style="color: #028A0F">**3. Installing Coding Tools**</span>
 
-### 3.1. Installing Java and Maven
+### <span style="color: #028A0F">**3.1. Installing Java and Maven**</span>
 
 Installing Java is pretty straight forward. Just select the version you want (here i will install 11 but just change the number and you install another easily). I am also including sources so when coding in VsCode you can CTRL-Click the sources and it shows you the code. Totally unnecessary but I like to have the option, if you don't just remove the <em>source</em> block from the command.
 
     sudo apt-get install openjdk-11-jdk openjdk-11-source maven
 
-Note that this will trigger a download of over 400Mb of data and it can take some time (up to 5/10 minutes depending on the machine) and **DO NOT shutdown Ubuntu mid installation as it can do serious damage to once you retry.** You can always run the commands seperately and they will take significantly less each. This way ubuntu just starts one right next to the other.
+Note that this will trigger a download of over 400Mb of data and it can take some time (up to 5/10 minutes depending on the machine) and <span style="color: red">DO NOT shutdown Ubuntu mid installation as it can do serious damage to once you retry.</span> You can always run the commands seperately and they will take significantly less each. This way ubuntu just starts one right next to the other.
 
 At the end of the installation you should restart your Ubuntu and can check the installations by typing:
 
@@ -81,7 +81,7 @@ To this you should get something similar to:
 
 <br/>
 
-### 3.2) Installing NPM
+### <span style="color: #028A0F">**3.2) Installing NPM**</span>
 
 You can check the Microsoft Tutorial from which I based mine [here](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-wsl).
 
@@ -94,7 +94,7 @@ Microsoft tells you in their tutorial that you should install curl, but by defau
 3. Install the lastest NPM stable version by running <code>nvm install --lts</code>
 4. You can now run <code>npm --version</code> and you will see that NPM is installed.
 
-### 3.3. Installing MySQL
+### <span style="color: #028A0F">**3.3. Installing MySQL**</span>
 
 You can check the Microsoft Tutorial from which I based mine [here](https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mysql).
 
@@ -128,13 +128,13 @@ After this you can connect to MySQL from Windows including connecting with the W
 
 <br/>
 
-### 3.4. Installing Gcc and Make
+### <span style="color: #028A0F">**3.4. Installing Gcc and Make**</span>
 
 To install gcc and makefile is simple. However if you need to install anaconda in [3.5](#35-installing-python-and-anaconda) there is no need to install them manually since anaconda and python need them and will install them if they are not present in your system.
 
     sudo apt install gcc make
 
-### 3.5. Installing Python and Anaconda
+### <span style="color: #028A0F">**3.5. Installing Python and Anaconda**</span>
 Open your command prompt and run the following command. This will prompt anaconda's download. Take in mind it is a 450Mb download that can take some time, and as mentioned in the previous section if you don't have gcc it will install it as well as other tools where python runs.
 
     wget https://repo.continuum.io/archive/Anaconda3-5.3.1-Linux-x86_64.sh
@@ -145,9 +145,9 @@ Once the download is finished, let's install it and configure it. Run the file y
 
 Once installed it will ask you whether you want to include it in .bashrc, say yes. Once it asks if you want VSCode say no because VSCode in WSL2 is installed through VSCode itself from Windows. Once you restart you can see that if you run <code>which python</code> or <code>which conda</code> it will point to anaconda's python or anaconda itself.
 
-## 4. Solving some issues
+## <span style="color: #028A0F">**4. Solving some issues**</span>
 
-### 4.1. File System Access Errors
+### <span style="color: #028A0F">**4.1. File System Access Errors**</span>
 
 If you copy files to your Ubuntu System or even sometimes create new files it can occur that Ubuntu doesn't give you permissions to write to its file system. If you're using VSCode this is the warning it shows:
 
@@ -159,7 +159,7 @@ To fix this just run the command in the parent folder (ie if you want to give pe
 
     sudo chown -R {username} ./workspace
 
-### 4.2. Making VSCode work properly with Anaconda
+### <span style="color: #028A0F">**4.2. Making VSCode work properly with Anaconda**</span>
 
 Python and VSCode work well, but in order to use anaconda's python and dependencies you need to explicitly tell VSCode to use it. For that:
 1. Press F1 and type <em>Select Python Interpreter</em>.
