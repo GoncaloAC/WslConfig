@@ -165,3 +165,19 @@ Python and VSCode work well, but in order to use anaconda's python and dependenc
 1. Press F1 and type <em>Select Python Interpreter</em>.
 2. Select the one coming from Anaconda.
 3. Now you can run python files or cells!
+
+### <span style="color: #028A0F">**Setting up visual applications**</span>
+
+If you need to develop a visual application like eletron or you just want to run a Ubuntu native application you need to install some packages before. Just run the command:
+
+    sudo apt install libgconf-2-4 libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 libgbm-dev libnss3-dev libxss-dev
+
+After this you will need to install XLaunch [here](https://sourceforge.net/projects/vcxsrv/). This will allow windows to receive the visual part of the applications. After installing this you need to setup an environment like in the image below. If you desire you can save the configurations and then you just need to reuse them any time you need to run a graphical application.
+
+![image](pic.png)
+![image2](pic2.png)
+
+After the first setup, ie the first boot, make sure to add the following line in your Ubuntu's .bashrc file, which can be found in the {username} folder.
+
+    export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0 
+    export LIBGL_ALWAYS_INDIRECT=1
