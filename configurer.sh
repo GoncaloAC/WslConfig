@@ -9,7 +9,7 @@
 	PostgresSQL - https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql
 '
 
-source common.sh
+source ./common.sh
 
 CONT="Continuing configuration in"
 INST="Configuring now "

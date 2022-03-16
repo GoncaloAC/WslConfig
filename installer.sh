@@ -14,7 +14,7 @@
 	Neo4j - https://github.com/lqst/neo4j-wsl2
 '
 
-source common.sh
+source ./common.sh
 
 CONT="Continuing installtion in"
 INST="Installing now"

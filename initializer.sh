@@ -4,12 +4,12 @@
 	@Author: Gonçalo Condeço - https://github.com/GoncaloAC
 '
 
-source common.sh
+source ./common.sh
 
 if type mysql >/dev/null 2>&1
     then
         sudo /etc/init.d/mysql start > /dev/null 2>&1
-        tell 3 "MySQL is now running."
+        tell 0 "MySQL is now running."
     else
         error 0 "MySQL is not installed."
 fi
@@ -17,7 +17,7 @@ fi
 if type postgresql >/dev/null 2>&1
     then 
         sudo service postgresql start
-        tell 3 "PostgresSQL is now running."
+        tell 0 "PostgresSQL is now running."
     else
         error 0 "PostgresSQL is not installed."
 fi
@@ -25,7 +25,7 @@ fi
 if type mongo >/dev/null 2>&1
     then
         sudo service mongodb start > /dev/null 2>&1
-        tell 3 "MongoDB is now running."
+        tell 0 "MongoDB is now running."
     else
         error 0 "MongoDB is not installed."
 fi
@@ -33,7 +33,7 @@ fi
 if redis-server -v >/dev/null 2>&1
     then
         sudo service redis-server start > /dev/null 2>&1
-        tell 3 "Redis is now running."
+        tell 0 "Redis is now running."
     else
         error 0 "Redis is not installed."
 fi
@@ -41,7 +41,7 @@ fi
 if type cassandra >/dev/null 2>&1
     then
         sudo service cassandra start > /dev/null 2>&1
-        tell 3 "Apache Cassandra is now running."
+        tell 0 "Apache Cassandra is now running."
     else
         error 0 "Apache Cassandra is not installed."
 fi
@@ -49,7 +49,7 @@ fi
 if type neo4j >/dev/null 2>&1
     then
         sudo service neo4j start > /dev/null 2>&1
-        tell 3 "Neo4j is now running."
+        tell 0 "Neo4j is now running."
     else
         error 0 "Neo4j is not installed."
 fi
