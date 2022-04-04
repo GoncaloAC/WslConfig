@@ -4,52 +4,65 @@
 	@Author: Gonçalo Condeço - https://github.com/GoncaloAC
 '
 
-source ./common.sh
+RED="\033[0;31m"
+YELLOW="\033[1;33m"
+GREEN="\033[0;32m"
+BLUE="\033[0;34m"
+ORANGE="\033[0;33m"
+NONE="\033[0m"
+
+tell() {
+    echo -e "${GREEN}$1${NONE}"
+}
+
+error() {
+    echo -e "${RED}$1${NONE}"
+}
 
 if type mysql >/dev/null 2>&1
     then
         sudo /etc/init.d/mysql start > /dev/null 2>&1
-        tell 0 "MySQL is now running."
+        tell "MySQL is now running."
     else
-        error 0 "MySQL is not installed."
+        error "MySQL is not installed."
 fi
 
 if type postgresql >/dev/null 2>&1
     then 
         sudo service postgresql start
-        tell 0 "PostgresSQL is now running."
+        tell "PostgresSQL is now running."
     else
-        error 0 "PostgresSQL is not installed."
+        error "PostgresSQL is not installed."
 fi
 
 if type mongo >/dev/null 2>&1
     then
         sudo service mongodb start > /dev/null 2>&1
-        tell 0 "MongoDB is now running."
+        tell "MongoDB is now running."
     else
-        error 0 "MongoDB is not installed."
+        error "MongoDB is not installed."
 fi
 
 if redis-server -v >/dev/null 2>&1
     then
         sudo service redis-server start > /dev/null 2>&1
-        tell 0 "Redis is now running."
+        tell "Redis is now running."
     else
-        error 0 "Redis is not installed."
+        error "Redis is not installed."
 fi
 
 if type cassandra >/dev/null 2>&1
     then
         sudo service cassandra start > /dev/null 2>&1
-        tell 0 "Apache Cassandra is now running."
+        tell "Apache Cassandra is now running."
     else
-        error 0 "Apache Cassandra is not installed."
+        error "Apache Cassandra is not installed."
 fi
 
 if type neo4j >/dev/null 2>&1
     then
         sudo service neo4j start > /dev/null 2>&1
-        tell 0 "Neo4j is now running."
+        tell "Neo4j is now running."
     else
-        error 0 "Neo4j is not installed."
+        error "Neo4j is not installed."
 fi

@@ -14,11 +14,42 @@
 	Neo4j - https://github.com/lqst/neo4j-wsl2
 '
 
-source ./common.sh
-
+RED="\033[0;31m"
+YELLOW="\033[1;33m"
+GREEN="\033[0;32m"
+BLUE="\033[0;34m"
+ORANGE="\033[0;33m"
+NONE="\033[0m"
 CONT="Continuing installtion in"
 INST="Installing now"
 WARN="This needs further configuration. Check the tutorial Readme.md."
+
+update() {
+    clear
+    echo -e "${BLUE}Updating Ubuntu...${NONE}"
+    sudo -i apt-get update > /dev/null 2>&1
+    sudo apt-get upgrade -y > /dev/null 2>&1
+}
+
+continuing() {
+    secs=5
+    while [ $secs -gt 0 ]; do
+        echo -ne "${BLUE}$1 ${ORANGE}$secs\033[0K\r${NONE}"
+        sleep 1
+        ((secs--))
+    done
+    echo -e "${BLUE}$1 ${ORANGE}0\033[0K\r${NONE}"
+    echo -e "${GREEN}$2${NONE}"
+}
+
+tell() {
+    echo -e "${GREEN}$1${NONE}"
+    sleep 5
+}
+
+warn() {
+    echo -e "${YELLOW}$1${NONE}"
+}
 
 update
 sudo -i apt install dialog > /dev/null 2>&1
@@ -51,59 +82,60 @@ do
         1)
             update && continuing "$CONT" "$INST Java 11"
 			sudo apt-get install openjdk-11-jdk
+			echo >> ~/.bashrc
 			echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64' >> ~/.bashrc
-			tell 5 "Java 11 installed successfully!"
+			tell "Java 11 installed successfully!"
 			;;
 		2)
 			update && continuing "$CONT" "$INST Java 11 sources"
 			sudo apt-get install openjdk-11-source
-			tell 5 "Java 11 sources installed successfully!"
+			tell "Java 11 sources installed successfully!"
 			;;
 		3)
 			update && continuing "$CONT" "$INST Maven"
 			sudo apt-get install maven
-			tell 5 "Maven installed successfully!"
+			tell "Maven installed successfully!"
 			;;
 		4)
 			update && continuing "$CONT" "$INST Node Version Manager (nvm)"
 			sudo apt-get install curl
 			curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-			tell 0 "NVM installed successfully!"
-			warn 5 "$WARN"
+			warn "$WARN"
+			tell "NVM installed successfully!"
 			;;
 		5) 
 			update && continuing "$CONT" "$INST Gcc"
 			sudo apt install gcc
-			tell 5 "Gcc installed successfully!"
+			tell "Gcc installed successfully!"
 			;;
 		6)
 			update && continuing "$CONT" "$INST Make"
 			sudo apt install make
-			tell 5 "Make installed successfully!"
+			tell "Make installed successfully!"
 			;;
 		7)
 			update && continuing "$CONT" "$INST Anaconda"
 			wget https://repo.continuum.io/archive/Anaconda3-5.3.1-Linux-x86_64.sh
 			bash Anaconda3-5.3.1-Linux-x86_64.sh
 			rm Anaconda3-5.3.1-Linux-x86_64.sh
-			tell 5 "Anaconda installed successfully!"
+			tell "Anaconda installed successfully!"
 			;;
 		8)
 			update && continuing "$CONT" "$INST MySQL"
 			sudo apt install mysql-server
-			tell 0 "MySQL installed successfully!"
-			warn 5 "$WARN"
+			warn "$WARN"
+			tell "MySQL installed successfully!"
 			;;
 		9)
 			update && continuing "$CONT" "$INST PostgresSQL"
 			sudo apt install postgresql postgresql-contrib
-			tell 0 "PostgresSQL installed successfully!"
-			warn 5 "$WARN"
+			warn "$WARN"
+			tell "PostgresSQL installed successfully!"
 			;;
 		10)
 			update && continuing "$CONT" "$INST SQLite"
 			sudo apt install sqlite3
-			tell 5 "SQLite installed successfully!"
+			tell "SQLite installed successfully!"
 			;;
 		11)
 			update && continuing "$CONT" "$INST Apache Cassandra"
@@ -111,7 +143,7 @@ do
 			curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
 			sudo apt-get update
 			sudo apt-get install cassandra
-			tell 5 "Apache Cassandra installed successfully!"
+			tell "Apache Cassandra installed successfully!"
 			;;
 		12)
 			update && continuing "$CONT" "$INST MongoDB"
@@ -122,12 +154,12 @@ do
 			mkdir -p ~/data/db
 			curl https://raw.githubusercontent.com/mongodb/mongo/master/debian/init.d | sudo tee /etc/init.d/mongodb >/dev/null
 			sudo chmod +x /etc/init.d/mongodb
-			tell 5 "MongoDB installed successfully!"
+			tell "MongoDB installed successfully!"
 			;;
 		13) 
 			update && continuing "$CONT" "$INST Redis"
 			sudo apt install redis-server
-			tell 5 "Redis installed successfully!"
+			tell "Redis installed successfully!"
 			;;
 		14)
 			update && continuing "$CONT" "$INST Neo4j"
@@ -135,10 +167,10 @@ do
 			echo 'deb https://debian.neo4j.com stable latest' | sudo tee -a /etc/apt/sources.list.d/neo4j.list
 			sudo apt-get update
 			sudo apt-get install neo4j-enterprise=1:4.4.4
-			tell 5 "Neo4j installed successfully!"
+			tell "Neo4j installed successfully!"
 			;;
     esac
 done
 
 clear
-tell 1 "Installation finished successfully!"
+tell "Installation finished successfully!"

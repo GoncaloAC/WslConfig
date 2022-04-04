@@ -8,11 +8,31 @@
 	MySQL - https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mysql
 	PostgresSQL - https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-postgresql
 '
-
-source ./common.sh
-
+RED="\033[0;31m"
+YELLOW="\033[1;33m"
+GREEN="\033[0;32m"
+BLUE="\033[0;34m"
+ORANGE="\033[0;33m"
+NONE="\033[0m"
 CONT="Continuing configuration in"
 INST="Configuring now "
+
+continuing() {
+    secs=5
+    while [ $secs -gt 0 ]; do
+        echo -ne "${BLUE}$1 ${ORANGE}$secs\033[0K\r${NONE}"
+        sleep 1
+        ((secs--))
+    done
+    echo -e "${BLUE}$1 ${ORANGE}0\033[0K\r${NONE}"
+    echo -e "${GREEN}$2${NONE}"
+}
+
+tell() {
+    echo -e "${GREEN}$1${NONE}"
+    sleep 5
+}
+
 sudo -i apt install dialog
 cmd=(dialog --separate-output --checklist "Please Select Software you want to configure:" 22 76 16)
 
@@ -31,22 +51,22 @@ do
             clear && continuing "$CONT" "$INST NPM"
             source ~/.nvm/nvm.sh
             nvm install --lts
-            tell 5 "NPM configured successfully!"
+            tell "NPM configured successfully!"
             ;;
         2)
             clear && continuing "$CONT" "$INST MySQL"
             sudo /etc/init.d/mysql start
             sudo mysql_secure_installation
             sudo mysql
-            tell 5 "MySQL configured successfully!"
+            tell "MySQL configured successfully!"
             ;;
         3)
             clear && continuing "$CONT" "$INST PostgresSQL"
             sudo passwd postgres
-            tell 5 "PostgresSQL configured successfully!"
+            tell "PostgresSQL configured successfully!"
             ;;
     esac
 done
 
 clear
-tell 1 "Configuration finished successfully!"
+tell "Configuration finished successfully!"
