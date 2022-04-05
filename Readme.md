@@ -1,64 +1,92 @@
 # Setting up Wsl2 Ubuntu
 
+<div style="text-align: justify; text-justify: inter-word;">
+
 This tutorial will show you how to setup WSL2 in windows as well as how to install some tools like database management systems, programming languages, dependency management and building tools among other development tools. Running these scripts give you a choice of what to install as well as give some indications on how to configure those who need configuring.
 
-## <span style="color: #028A0F">**1. Warning**</span>
+## <span style="color: #028A0F">**1. Setup the script**</span>
 
-If there is any problem with file manipulation, and Ubuntu says you can't save files, then you need to grant permissions to your user. Do that by going to the home directory (the parent dir of your user) and running:
+
+I strongly advise that the first thing you do after installing your wsl distro is running a chown command over your root. You can do this by changing directory until you are in the `home` directory (if you just booted your distro, run `cd ..`) and you should see the prompt end in `/home$`, and then run:
 
     sudo chown -R {user} ./{user}
 
-Because of conflicts between windows and linux character encoding, you might have an error like:
+This will give you full access and write permission to all folders and subfolders inside the `/home/{username}` directory. This can be overlooked and done on a need-basis. Whenever you see an error (either in VSCode / Ubuntu Shell / Windows File System of WSL) stating that your user has no write privileges, just run this command altering the last parameter to be `./{target folder}`.
 
-    ./initializer.sh: line 6: $'\r': command not found
+Now you need to install the script. For this, follow the steps below:
 
-If this appears, run the following command for **all** scripts:
+1) Copy the script file to a directory you won't delete. (I recommend to put it into the /home/{username} directory as that will never be deleted because it is the root of your system).
 
-    sed -i 's/\r$//' <script file>
+2) You will need to run a command to turn the file into an executable. This means the script will run without the need to type `bash` into the console.
 
-## <span style="color: #028A0F">**2. Installer Script**</span>
+        chmod u+x script.sh
 
-The installer script lets you choose what to install. You need to select by clicking the options. The system works fine with VSCode terminal but can get buggy sometimes if on a Ubuntu native WSL terminal. If you encounter issues like not being able to select, try to resize the window (generally the fullscreen terminal doesn't work, but once you resize it, it works).
+3) After this, there can be issues with encoding. I am not sure why since it was coded on a Ubuntu WSL machine but GitHub changes the format to a point where Ubuntu's console will not be able to run it and throws an error. 
 
-## <span style="color: #028A0F">**3. Configurer Script**</span>
+        sed -i 's/\r$//' script.sh
 
-The configurer script helps you go through the configuring process of some systems (mainly database management systems). 
+4) Then you need to create an alias so that Ubuntu. To do that, open your `.bashrc` file (located in your user folder eg: /home/{username}/.bashrc) and add the code:
 
-In the case of MySQL you probably will need to setup a new root password. This will allow connecting to Spring Boot servers and MySQL Workbench or VSCode database extension with a connection string or username/password combo. By default the root password doesn't exist therefore this connecting method won't work. Running the next command replacing 'new-password' with the password you wish should fix it:
+        alias system='/home/{username}/script.sh'
+        
+    Note that if you did not put the script file in the '/home/{username}' folder, you need to update the line above before saving the file. You can also change the alias. With the above alias you will be able to access the script by typing `system <command name>`. If you change the alias you will need to type `<alias> <function>`.
+    
+5) Finally you need to reboot your wsl distro. This is not as simple as closing VSCode or the Windows App itself. You will need to open a Windows prompt (either through Windows Terminal, Windows Command Line or Windows PowerShell) run the command below to stop your distro from running (basically a shut down).
 
-    ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new-password';
+        wsl -t <distro name>
 
-If you wish to check if it worked, run:
+    If you do not know the name of your distro (meaning the name of the installation of a distro), you can check by running:
 
-    select user,authentication_string,plugin,host FROM mysql.user;
+        wsl -l -v
 
-You should see a table where in the root line, the authentication_string column should have an hash and not be empty like it would be by default.
+## <span style="color: #028A0F">**2. Script commands**</span>
 
-## <span style="color: #028A0F">**4. Other Scripts**</span>
+For the sake of consistency, all examples below follow the previous section, which means all commands will be shown here as `system <command name>`
 
-There are three other script files:
-<ul>
-<li><code>common.sh</code> - this provides a set of functions use through the other scripts and was coded just for the sake of avoiding repetition.</li>
-<li><code>initializer.sh</code> - initializes all database systems as a service that are present.</li>
-<li><code>stopper.sh</code> - stops all database systems as a service that are present.</li>
-</ul>
+1) <span style="font-weight:bold">Installing Software</span> - This script will give you a prompt with a UI that allows you to choose the software you need. After you choose, it will proceed to install it. <span style="color: red; font-weight:bold;">Note</span>: Since it is using WSL, dialog (the package used for the selection process) can bug specially if the window is in full screen. If this happened, resize the window and it should work then.
+    
+        system install
+    
+2) <span style="font-weight:bold">Configuring Software</span> - As the script warns you during installation, some of the software needs to be configured to function properly. 
+    
+        system config
 
-## <span style="color: #028A0F">**5. Configure to run as commands**</span>
+    This command will prompt a Dialog UI like the previous, which has:
+   
+    1) <span style="font-weight:bold">NVM</span> - The installation only installed Node Version Manager, to install the latest NPM run. This configuration process will install the latest stable version of NPM.
 
-In order to make the scripts commands you need to follow the steps:
+    2) <span style="font-weight:bold">MySQL</span> - If you installed MySQL you need to run the configuration process. Here it will run a command `sudo mysql_secure_installation` that will ask for user input in order to configure the system. <span style="font-weight:bold">I recommend</span>:
 
-First, move the files (the ones you want to make commands - always including common as is imported in all others) to a folder you will never delete. Then you need to give the scripts executable permission (note that even if you don't want to turn all into commands, the common.sh is always needed - meaning it needs to be executable and moved to the folder if any of the others are to work) run the command:
+        - First MySQL asks if you need VALIDATE PASSWORD. That is a system that evaluates the strength of passwords. If your installation is for personal/professional use but is not accessible to the outside, you can say no as the password is a mere formality. If you are installing it to run a permanent system that will connect to deployed front-end then you probably should. In my WSL installation I said<span style="color:green"> no.</span>
+        - Following that it will ask you for a password. Fill with whatever you want.
+        - When it asks you `Remove Anonymous Users` say <span style="color:green">yes</span>, otherwise there won't even be the need to provide username/password authentication.
+        - When you see `Disallow login remotely` say <span style="color:green">no</span> because your in WSL, if you want to access the db in the same machine but in windows that's a remote login.
+        - Then it asks you whether or not you want to remove the test database. That is pretty much indifferent, keep it or not it's pretty much useless anyway.
+        - Finally it asks you if you want to `reload privilege tables` to that, say <span style="color:green">yes</span> as it will be necessary for the next step.
 
-    chmod u+x <script>
+        After this you should see yourself in the MySQL shell. Here you need to make a small change that will set a password to your root. If you run the command:
 
-If permission issues appear, remeber to change permission by using sudo chown as shown [here](#span-style"color-028a0f"0-warningspan).
+            select user,authentication_string,plugin,host FROM mysql.user;
 
-Finally go to the <code>.bashrc</code> file (located in your user folder eg: /home/testpc/.bashrc) and add one line for each script (except common as it doesn't run as a standalone script).
+        You should now see that the root's `authentication_string` is empty. That is required if you want to connect to the db via localhost. To fix this, run the command below, replacing new-password with the password of your choice (remember not to delete the '').
 
-    alias <alias name>='/home/path/to/your/folder/<script>'
+            ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new-password';
+        
+        Finally you can now exit the MySQL shell forever by running 
 
-Something like:
+            quit
 
-    alias start='/home/pc/aliases/initializer.sh'
+    3) <span style="font-weight:bold">Postgres</span> will just ask you to set a password, after you set one it's pretty much done.
 
-Reboot your Ubuntu and when you type your new commands they should work.
+3) <span style="font-weight:bold">Initializing Databases</span> - This will initialize the server for all databases you have installed. It will give you an output string for each database supported in the `system install` command. It will say that the server started successfully or that is not installed (this script won't install any of the databases that are not installed, the output is merely informative). To run this, type:
+
+        system start
+
+4) <span style="font-weight:bold">Stopping Databases</span> - Equal to the previous command in every way but instead of starting the databases server it stops it (after this, any connection you had with the dbs will crash).
+
+        system stop
+
+5) <span style="font-weight:bold">Help</span> - This will print the right syntax to use within the script.
+
+        system help
+</div>
