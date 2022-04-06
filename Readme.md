@@ -1,17 +1,18 @@
-# Setting up Wsl2 Ubuntu
+# **Setting up Wsl2 Ubuntu**
 
 <div style="text-align: justify; text-justify: inter-word;">
 
 This tutorial will show you how to setup WSL2 in windows as well as how to install some tools like database management systems, programming languages, dependency management and building tools among other development tools. Running these scripts give you a choice of what to install as well as give some indications on how to configure those who need configuring.
 
-## <span style="color: #028A0F">**1. Setup the script**</span>
-
+## **1. Initial Ubuntu setup**
 
 I strongly advise that the first thing you do after installing your wsl distro is running a chown command over your root. You can do this by changing directory until you are in the `home` directory (if you just booted your distro, run `cd ..`) and you should see the prompt end in `/home$`, and then run:
 
     sudo chown -R {user} ./{user}
 
-This will give you full access and write permission to all folders and subfolders inside the `/home/{username}` directory. This can be overlooked and done on a need-basis. Whenever you see an error (either in VSCode / Ubuntu Shell / Windows File System of WSL) stating that your user has no write privileges, just run this command altering the last parameter to be `./{target folder}`.
+**NOTE**: Some of the software like npm/nvm and maven need you to **reboot the WSL distro** like you will need to when installing the script. You can run the command on windows prompt `wsl -t <distro name>`. Make sure you have everything related to WSL (like the shell, VSCode and through windows explorer).
+
+## **2. Installing the script**
 
 Now you need to install the script. For this, follow the steps below:
 
@@ -39,30 +40,32 @@ Now you need to install the script. For this, follow the steps below:
 
         wsl -l -v
 
-## <span style="color: #028A0F">**2. Script commands**</span>
+## **3. Script commands**
 
 For the sake of consistency, all examples below follow the previous section, which means all commands will be shown here as `system <command name>`
 
-1) <span style="font-weight:bold">Installing Software</span> - This script will give you a prompt with a UI that allows you to choose the software you need. After you choose, it will proceed to install it. <span style="color: red; font-weight:bold;">Note</span>: Since it is using WSL, dialog (the package used for the selection process) can bug specially if the window is in full screen. If this happened, resize the window and it should work then.
+1) **Installing Software** - This script will give you a prompt with a UI that allows you to choose the software you need. After you choose, it will proceed to install it. **_Note_**: Since it is using WSL, dialog (the package used for the selection process) can bug specially if the window is in full screen. If this happened, resize the window and it should work then.
     
         system install
+
+   **_WARNING_:** some of the software, namely maven, nvm/npm need you to restart the system, just like described above using a Windows prompt and running `wsl -t <distro name>`.
     
-2) <span style="font-weight:bold">Configuring Software</span> - As the script warns you during installation, some of the software needs to be configured to function properly. 
+2) **Configuring Software** - As the script warns you during installation, some of the software needs to be configured to function properly. 
     
         system config
 
     This command will prompt a Dialog UI like the previous, which has:
    
-    1) <span style="font-weight:bold">NVM</span> - The installation only installed Node Version Manager, to install the latest NPM run. This configuration process will install the latest stable version of NPM.
+    1) **NVM** - The installation only installed Node Version Manager, to install the latest NPM run. This configuration process will install the latest stable version of NPM.
 
-    2) <span style="font-weight:bold">MySQL</span> - If you installed MySQL you need to run the configuration process. Here it will run a command `sudo mysql_secure_installation` that will ask for user input in order to configure the system. <span style="font-weight:bold">I recommend</span>:
+    2) **MySQL** - If you installed MySQL you need to run the configuration process. Here it will run a command `sudo mysql_secure_installation` that will ask for user input in order to configure the system. <span style="font-weight:bold">I recommend</span>:
 
-        - First MySQL asks if you need VALIDATE PASSWORD. That is a system that evaluates the strength of passwords. If your installation is for personal/professional use but is not accessible to the outside, you can say no as the password is a mere formality. If you are installing it to run a permanent system that will connect to deployed front-end then you probably should. In my WSL installation I said<span style="color:green"> no.</span>
+        - First MySQL asks if you need VALIDATE PASSWORD. That is a system that evaluates the strength of passwords. If your installation is for personal/professional use but is not accessible to the outside, you can say no as the password is a mere formality. If you are installing it to run a permanent system that will connect to deployed front-end then you probably should. In my WSL installation I said **no**.
         - Following that it will ask you for a password. Fill with whatever you want.
-        - When it asks you `Remove Anonymous Users` say <span style="color:green">yes</span>, otherwise there won't even be the need to provide username/password authentication.
-        - When you see `Disallow login remotely` say <span style="color:green">no</span> because your in WSL, if you want to access the db in the same machine but in windows that's a remote login.
+        - When it asks you `Remove Anonymous Users` say **yes**, otherwise there won't even be the need to provide username/password authentication.
+        - When you see `Disallow login remotely` say **no** because your in WSL, if you want to access the db in the same machine but in windows that's a remote login.
         - Then it asks you whether or not you want to remove the test database. That is pretty much indifferent, keep it or not it's pretty much useless anyway.
-        - Finally it asks you if you want to `reload privilege tables` to that, say <span style="color:green">yes</span> as it will be necessary for the next step.
+        - Finally it asks you if you want to `reload privilege tables` to that, say **yes** as it will be necessary for the next step.
 
         After this you should see yourself in the MySQL shell. Here you need to make a small change that will set a password to your root. If you run the command:
 
@@ -76,9 +79,11 @@ For the sake of consistency, all examples below follow the previous section, whi
 
             quit
 
-    3) <span style="font-weight:bold">Postgres</span> will just ask you to set a password, after you set one it's pretty much done.
+        **_WARNING:_** some of the software, namely maven, nvm/npm need you to restart the system, just like described above using a Windows prompt and running `wsl -t <distro name>`.
 
-3) <span style="font-weight:bold">Initializing Databases</span> - This will initialize the server for all databases you have installed. It will give you an output string for each database supported in the `system install` command. It will say that the server started successfully or that is not installed (this script won't install any of the databases that are not installed, the output is merely informative). To run this, type:
+    3) **Postgres** will just ask you to set a password, after you set one it's pretty much done.
+
+3) **Initializing Databases** - This will initialize the server for all databases you have installed. It will give you an output string for each database supported in the `system install` command. It will say that the server started successfully or that is not installed (this script won't install any of the databases that are not installed, the output is merely informative). To run this, type:
 
         system start
 
@@ -89,4 +94,6 @@ For the sake of consistency, all examples below follow the previous section, whi
 5) <span style="font-weight:bold">Help</span> - This will print the right syntax to use within the script.
 
         system help
+
+
 </div>

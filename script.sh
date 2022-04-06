@@ -26,6 +26,7 @@ WARN="This needs further configuration. Check the tutorial Readme."
 RUN=" is now running."
 STOP=" is now stopped."
 NOP=" is not installed."
+me=$USER
 
 update() {
     info "Updating Ubuntu..."
@@ -122,7 +123,12 @@ case $1 in
                     ;;
                 3)
                     update && timer "$CONT" "$INST Maven"
-                    sudo apt-get install maven -y
+                    wget https://apache.org/dist/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz -P /tmp
+                    sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
+                    sudo chown -R $me /opt/apache-maven-3.8.5/
+                    echo 'export MAVEN_HOME=/opt/apache-maven-3.8.5' >> ~/.bashrc
+                    echo 'export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH' >> ~/.bashrc
+                    rm /tmp/apache-maven-3.8.5-bin.tar.gz
                     success "Maven installed successfully!"
                     ;;
                 4)
