@@ -123,12 +123,7 @@ case $1 in
                     ;;
                 3)
                     update && timer "$CONT" "$INST Maven"
-                    wget https://apache.org/dist/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz -P /tmp
-                    sudo tar xf /tmp/apache-maven-*.tar.gz -C /opt
-                    sudo chown -R $me /opt/apache-maven-3.8.5/
-                    echo 'export MAVEN_HOME=/opt/apache-maven-3.8.5' >> ~/.bashrc
-                    echo 'export PATH=$JAVA_HOME/bin:$MAVEN_HOME/bin:$PATH' >> ~/.bashrc
-                    rm /tmp/apache-maven-3.8.5-bin.tar.gz
+                    sudo apt install maven
                     success "Maven installed successfully!"
                     ;;
                 4)
@@ -149,9 +144,9 @@ case $1 in
                     ;;
                 7)
                     update && timer "$CONT" "$INST Anaconda"
-                    wget https://repo.continuum.io/archive/Anaconda3-5.3.1-Linux-x86_64.sh
-                    bash Anaconda3-5.3.1-Linux-x86_64.sh
-                    rm Anaconda3-5.3.1-Linux-x86_64.sh
+                    wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh
+                    bash Miniconda3-py39_4.12.0-Linux-x86_64.sh
+                    rm Miniconda3-py39_4.12.0-Linux-x86_64.sh
                     success "Anaconda installed successfully!"
                     ;;
                 8)
