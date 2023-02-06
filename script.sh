@@ -2,6 +2,7 @@
 https://www.vultr.com/docs/install-apache-cassandra-on-ubuntu-20-04/
 https://github.com/redhat-developer/vscode-java/issues/689
 https://gist.github.com/Nathan-Nesbitt/97e2c466cfdb74f4322c2678551eb93e
+https://stackoverflow.com/questions/36433835/getting-cassandra-to-use-an-alternate-java-install
 : '
 	@Author: Gonçalo Condeço - https://github.com/GoncaloAC
 
