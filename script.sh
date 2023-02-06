@@ -1,5 +1,6 @@
 #!/bin/bash
-
+https://www.vultr.com/docs/install-apache-cassandra-on-ubuntu-20-04/
+https://github.com/redhat-developer/vscode-java/issues/689
 : '
 	@Author: Gonçalo Condeço - https://github.com/GoncaloAC
 
