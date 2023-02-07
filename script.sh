@@ -1,10 +1,5 @@
 #!/bin/bash
-https://www.vultr.com/docs/install-apache-cassandra-on-ubuntu-20-04/
-https://github.com/redhat-developer/vscode-java/issues/689
-https://gist.github.com/Nathan-Nesbitt/97e2c466cfdb74f4322c2678551eb93e
-https://stackoverflow.com/questions/36433835/getting-cassandra-to-use-an-alternate-java-install
 
-JAVA_HOME=usr/lib/jvm/java-8-openjdk-amd64
 : '
 	@Author: Gonçalo Condeço - https://github.com/GoncaloAC
 
@@ -17,6 +12,11 @@ JAVA_HOME=usr/lib/jvm/java-8-openjdk-amd64
 	MongoDB - https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb
 	Redis - https://docs.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-redis
 	Neo4j - https://github.com/lqst/neo4j-wsl2
+
+    https://www.vultr.com/docs/install-apache-cassandra-on-ubuntu-20-04/
+    https://github.com/redhat-developer/vscode-java/issues/689
+    https://gist.github.com/Nathan-Nesbitt/97e2c466cfdb74f4322c2678551eb93e
+    https://stackoverflow.com/questions/36433835/getting-cassandra-to-use-an-alternate-java-install
 '
 
 RED="\033[0;31m"
@@ -171,9 +171,13 @@ case $1 in
                     ;;
 		        11)
                     update && timer "$CONT" "$INST Apache Cassandra"
-                    echo "deb http://downloads.apache.org/cassandra/debian 40x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
-                    curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
-                    sudo apt-get update && sudo apt-get install cassandra
+                    sudo apt install openjdk-8-jre
+                    sudo apt install apt-transport-https gnupg2 -y
+                    sudo wget -q -O - https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+                    sudo sh -c 'echo "deb http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.list'
+                    sudo apt update
+                    sudo apt install cassandra -y
+                    echo 'JAVA_HOME=usr/lib/jvm/java-8-openjdk-amd64' >> ~/usr/share/cassandra/cassandra.in.sh
                     success "Apache Cassandra installed successfully!"
                     ;;
                 12)
