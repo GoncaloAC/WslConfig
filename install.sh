@@ -63,7 +63,7 @@ timer "MariaDB installed successfully!"
 timer "Installing Apache Cassandra in"
 sudo apt install openjdk-8-jre -y
 curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
-sudo sh -c 'echo "deb http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.list'
+sudo sh -c 'echo "deb https://debian.cassandra.apache.org 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
 curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install cassandra -y
