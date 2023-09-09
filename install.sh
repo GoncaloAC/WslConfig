@@ -67,7 +67,7 @@ curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install cassandra -y
 sudo chmod -R a+w /usr/share/cassandra/
-echo 'JAVA_HOME=usr/lib/jvm/java-8-openjdk-amd64' >> /usr/share/cassandra/cassandra.in.sh
+echo 'JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64' >> /usr/share/cassandra/cassandra.in.sh
 timer "Apache Cassandra installed successfully!"
                     
 timer "Installing Redis in"
@@ -79,7 +79,7 @@ wget -O - https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
 echo 'deb https://debian.neo4j.com stable latest' | sudo tee -a /etc/apt/sources.list.d/neo4j.list
 sudo apt-get update
 sudo apt-get install neo4j-enterprise -y
-timer "MariaDB installed successfully!"
+timer "Neo4j installed successfully!"
 
 timer "Installing Google Chrome"
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
