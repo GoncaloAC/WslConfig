@@ -62,12 +62,12 @@ timer "MariaDB installed successfully!"
 
 timer "Installing Apache Cassandra in"
 sudo apt install openjdk-8-jre -y
-curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
 sudo sh -c 'echo "deb https://debian.cassandra.apache.org 311x main" > /etc/apt/sources.list.d/cassandra.sources.list'
 curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
 sudo apt-get update
 sudo apt-get install cassandra -y
-echo 'JAVA_HOME=usr/lib/jvm/java-8-openjdk-amd64' >> ~/usr/share/cassandra/cassandra.in.sh
+sudo chmod -R a+w /usr/share/cassandra/
+echo 'JAVA_HOME=usr/lib/jvm/java-8-openjdk-amd64' >> /usr/share/cassandra/cassandra.in.sh
 timer "Apache Cassandra installed successfully!"
                     
 timer "Installing Redis in"
