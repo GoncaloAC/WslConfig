@@ -54,8 +54,7 @@ sudo apt install mariadb-server -y
 
 timer "Installing Apache Cassandra in"
 sudo apt install openjdk-8-jre -y
-sudo apt install apt-transport-https gnupg2 -y
-sudo wget -q -O - https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+curl https://downloads.apache.org/cassandra/KEYS | sudo apt-key add -
 sudo sh -c 'echo "deb http://www.apache.org/dist/cassandra/debian 311x main" > /etc/apt/sources.list.d/cassandra.list'
 sudo apt update
 sudo apt install cassandra -y
