@@ -6,7 +6,6 @@ ORANGE="\033[0;33m"
 NONE="\033[0m"
 
 timer() {
-    clear
     secs=4
     while [ $secs -gt 0 ]; do
         echo -ne "${CYAN}$1 ${ORANGE}$secs\033[O\r${NONE}" && sleep 1
