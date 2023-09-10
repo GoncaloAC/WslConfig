@@ -73,7 +73,7 @@ For the sake of consistency, all examples below follow the previous section, whi
 
         You should now see that the root's `authentication_string` is empty. That is required if you want to connect to the db via localhost. To fix this, run the command below, replacing new-password with the password of your choice (remember not to delete the '').
 
-            ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'new-password';
+            ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
         
         Finally you can now exit the MySQL shell forever by running 
 
