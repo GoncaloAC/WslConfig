@@ -18,6 +18,10 @@ info() {
     echo -e "${CYAN}$1${NONE}"
 }
 
+success() {
+    echo -e "${GREEN}$1${NONE}"
+}
+
 info "Updating Ubuntu in"
 
 sudo -i apt-get update
