@@ -102,3 +102,5 @@ sudo rm microsoft.gpg
 sudo apt update
 sudo apt install microsoft-edge-beta
 timer "Microsoft Edge installed successfully!"
+
+timer "Installing the scripts now..."
